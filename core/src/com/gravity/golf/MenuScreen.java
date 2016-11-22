@@ -24,7 +24,7 @@ public class MenuScreen extends PantallaBase {
         stage = new Stage(new FitViewport(640, 360));
         skin = new Skin(Gdx.files.internal("skin/uiskin.json"));
         play = new TextButton("Play", skin);
-        logo = new Image(game.getManager().get("imagenes/logo.png", Texture.class));
+        logo = new Image(game.getManager().get("img/logo.png", Texture.class));
 
         play.addCaptureListener(new ChangeListener() {
             @Override

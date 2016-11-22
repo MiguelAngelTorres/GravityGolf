@@ -2,7 +2,7 @@ package com.mygdx.gravity.golf.desktop;
 
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
-import com.mygdx.gravity.golf.MainGame;
+import com.gravity.golf.MainGame;
 
 public class DesktopLauncher {
 	public static void main (String[] arg) {

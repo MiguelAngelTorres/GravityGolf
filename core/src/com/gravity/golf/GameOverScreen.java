@@ -27,7 +27,7 @@ class GameOverScreen extends PantallaBase {
 
         stage = new Stage(new FitViewport(640,360));
         skin = new Skin(Gdx.files.internal("skin/uiskin.json"));
-        gameover = new Image(game.getManager().get("imagenes/gameover.png", Texture.class));
+        gameover = new Image(game.getManager().get("img/gameover.png", Texture.class));
         retry = new TextButton("Retry",skin);
 
         retry.addCaptureListener(new ChangeListener() {

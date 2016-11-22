@@ -21,15 +21,11 @@ public class MainGame extends Game {
 	@Override
 	public void create() {
 		manager = new AssetManager();
-		manager.load("imagenes/floor.png", Texture.class);
-		manager.load("imagenes/player.png", Texture.class);
-		manager.load("imagenes/spike.png", Texture.class);
-		manager.load("imagenes/logo.png", Texture.class);
-		manager.load("imagenes/overfloor.png", Texture.class);
-		manager.load("imagenes/gameover.png", Texture.class);
-		manager.load("canciones/die.ogg", Sound.class);
-		manager.load("canciones/jump.ogg", Sound.class);
-		manager.load("canciones/song.ogg", Music.class);
+		manager.load("img/mercurio.png", Texture.class);
+		manager.load("img/nave.png", Texture.class);
+		manager.load("img/logo.png", Texture.class);
+		manager.load("img/gameover.png", Texture.class);
+		manager.load("sound/die.ogg",Sound.class);
 
 		loadingScreen = new LoadingScreen(this);
 		setScreen(loadingScreen);

@@ -10,7 +10,7 @@ import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 
-import com.justagame.Constants;
+import com.gravity.golf.Constants;
 
 public class CommingSoonEntity extends Actor {
 
