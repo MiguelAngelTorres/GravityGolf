@@ -20,23 +20,21 @@ public class PlayerEntity extends Actor {
     private World world;
     public Body body;
     private Fixture fixture;
-    private Sound dieSound;
-    private boolean alive = false;
+    private boolean alive = false, explotando = false;
+    private int contador_muerte;
 
     public void setAlive(boolean novo){
-        if(novo == false){
-            dieSound.play();
-        }
         alive = novo;
     }
     public boolean isAlive(){
         return alive;
     }
+    public boolean isExplotando() { return explotando; }
+    public void setExplosion(){ explotando = true; }
 
-    public PlayerEntity(World world, Texture texture, Sound dieSound,float width, float height, Vector2 pos, Vector2 vec){
+    public PlayerEntity(World world, Texture texture, Vector2 pos, Vector2 v_init){
         this.world = world;
         this.texture = new Image(texture);
-        this.dieSound = dieSound;
 
         BodyDef def = new BodyDef();
         def.position.set(pos);
@@ -44,40 +42,46 @@ public class PlayerEntity extends Actor {
         body = world.createBody(def);
 
         PolygonShape jshape = new PolygonShape();
-        jshape.setAsBox(width/2, height/2);
+        jshape.setAsBox(0.25f, 0.5f);
         fixture = body.createFixture(jshape,1);
         fixture.setUserData("player");
         jshape.dispose();
 
         setSize(0.5f * Constants.PIXEL_IN_METER, Constants.PIXEL_IN_METER);
 
-        body.setLinearVelocity(vec.x, vec.y);
+        body.setLinearVelocity(v_init);
     }
 
     @Override
     public void draw(Batch batch, float parentAlpha) {
         setPosition((body.getPosition().x - 0.25f)* Constants.PIXEL_IN_METER, (body.getPosition().y - 0.5f) * Constants.PIXEL_IN_METER);
 
-        ////////////////////////////////////////////   GIRANAVES EN FUNCION DE LA VELOCIDAD  ///////////////////////////////////
-        texture.setColor(batch.getColor());
-        texture.setSize(getWidth(), getHeight());
-        texture.setPosition(getX(),getY());
-        texture.setOriginX(getWidth()/2);
-        texture.setOriginY(getHeight()/2);
+        if(alive == true) {
+            ////////////////////////////////////////////   GIRANAVES EN FUNCION DE LA VELOCIDAD  ///////////////////////////////////
+            texture.setColor(batch.getColor());
+            texture.setSize(getWidth(), getHeight());
+            texture.setPosition(getX(), getY());
+            texture.setOriginX(getWidth() / 2);
+            texture.setOriginY(getHeight() / 2);
 
-        float vx = body.getLinearVelocity().x;
-        float vy = body.getLinearVelocity().y;
+            float vx = body.getLinearVelocity().x;
+            float vy = body.getLinearVelocity().y;
 
-        if(vx > 0) {
-            texture.setRotation((float) (atan(vy/vx) * 180 / 3.141592f) + 145);
-        }else if(vx < 0){
-            texture.setRotation((float) (atan(vy / vx) * 180 / 3.141592f) + 180 + 145);
-        }else if(vy > 0){
-            texture.setRotation(90 + 145);
+            if (vx > 0) {
+                texture.setRotation((float) (atan(vy / vx) * 180 / 3.141592f) + 145);
+            } else if (vx < 0) {
+                texture.setRotation((float) (atan(vy / vx) * 180 / 3.141592f) + 180 + 145);
+            } else if (vy > 0) {
+                texture.setRotation(90 + 145);
+            } else {
+                texture.setRotation(-90 + 145);
+            }
+            texture.draw(batch, parentAlpha);
+        }else if ( explotando = false){
+
         }else{
-            texture.setRotation(-90 + 145);
+            contador_muerte++;
         }
-        texture.draw(batch,parentAlpha);
     }
 
     @Override

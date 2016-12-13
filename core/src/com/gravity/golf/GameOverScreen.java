@@ -33,9 +33,9 @@ class GameOverScreen extends PantallaBase {
         retry.addCaptureListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                game.gamescreen.player.setAlive(true);
+                game.gamescreen = new GameScreen(game);
                 game.setScreen(game.gamescreen);
-         //       game.gamescreen.show();
+                //game.gamescreen.show();
             }
         });
 

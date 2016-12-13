@@ -2,6 +2,7 @@ package com.gravity.golf.entities;
 
         import com.badlogic.gdx.graphics.Texture;
         import com.badlogic.gdx.graphics.g2d.Batch;
+        import com.badlogic.gdx.math.Vector2;
         import com.badlogic.gdx.physics.box2d.Body;
         import com.badlogic.gdx.physics.box2d.BodyDef;
         import com.badlogic.gdx.physics.box2d.CircleShape;
@@ -19,12 +20,12 @@ public class PlanetaEntity extends Actor {
     private Fixture fixture;
     private float radius;
 
-    public PlanetaEntity(World world, Texture planeta, float x, float y, float rad) {
+    public PlanetaEntity(World world, Texture planeta, Vector2 pos, float rad) {
         this.world = world;
         this.planeta = planeta;
 
         BodyDef def = new BodyDef();
-        def.position.set(x, y);
+        def.position.set(pos.x, pos.y);
         def.type = BodyDef.BodyType.StaticBody;
         body = world.createBody(def);
 
