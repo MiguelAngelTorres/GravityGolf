@@ -1,6 +1,5 @@
 package com.gravity.golf.entities;
 
-import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Vector2;
@@ -11,7 +10,7 @@ import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.gravity.golf.Constants;
+import com.gravity.golf.Util.Constants;
 
 import static java.lang.Math.atan;
 
@@ -105,9 +104,6 @@ public class PlayerEntity extends Actor {
         return body.getLinearVelocity().x;
     }
     public  float getVelocityY() { return body.getLinearVelocity().y; }
-    public float getMass() {
-        return 5000;
-    }
     public void applyGravity(Vector2 g){
         body.applyForceToCenter(g,true);
     }

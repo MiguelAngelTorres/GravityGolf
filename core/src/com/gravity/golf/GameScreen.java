@@ -15,20 +15,19 @@ import com.badlogic.gdx.physics.box2d.Manifold;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.gravity.golf.entities.EntityFactory;
+import com.gravity.golf.entities.LauncherEntity;
 import com.gravity.golf.entities.PlanetaEntity;
 import com.gravity.golf.entities.PlayerEntity;
-import com.gravity.golf.Constants;
 import com.gravity.golf.entities.SkyScene;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static java.lang.Math.abs;
+import static com.gravity.golf.Util.Constants.GAME_HEIGHT;
+import static com.gravity.golf.Util.Constants.GAME_WIDTH;
 import static java.lang.Math.pow;
-import static java.lang.Math.sqrt;
 
 
 public class GameScreen extends PantallaBase {
@@ -43,13 +42,14 @@ public class GameScreen extends PantallaBase {
     public PlayerEntity player;
     private List<PlanetaEntity> planetaList;
     private List<SkyScene> skyList;
+    private LauncherEntity launcher;
 
 
     public GameScreen(final MainGame game) {
         super(game);
         dieSound = game.getManager().get("sound/die.ogg");
 
-        stage = new Stage(new FitViewport(640, 420));
+        stage = new Stage(new FitViewport(GAME_WIDTH, GAME_HEIGHT));
         world = new World(new Vector2(0, 0), true);
 
         position = new Vector3(stage.getCamera().position);
@@ -105,6 +105,10 @@ public class GameScreen extends PantallaBase {
         for (SkyScene s : skyList){
             stage.addActor(s);
         }
+
+        launcher = factor.createLauncher();
+        stage.addActor(launcher);
+
         player = factor.createPlayer(world);
         stage.addActor(player);
         player.setAlive(true);
@@ -118,6 +122,12 @@ public class GameScreen extends PantallaBase {
 
 //        gameMusic.setVolume(0.60f);
 //        gameMusic.play();
+    }
+
+    @Override
+    public void resize(int width, int height) {
+        //cuando se cambie de tamaño se redimensionara el juego
+        Gdx.gl.glViewport( 0, 0, width, height);
     }
 
     @Override

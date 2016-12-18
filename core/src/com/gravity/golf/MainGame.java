@@ -21,11 +21,13 @@ public class MainGame extends Game {
 	@Override
 	public void create() {
 		manager = new AssetManager();
+		manager.load("img/letras.png", Texture.class);
 		manager.load("img/mercurio.png", Texture.class);
 		manager.load("img/Estrella_1.png", Texture.class);
 		manager.load("img/Estrella_2.png", Texture.class);
 		manager.load("img/tierra.png", Texture.class);
 		manager.load("img/nave.png", Texture.class);
+		manager.load("img/plataforma.png", Texture.class);
 		manager.load("img/logo.png", Texture.class);
 		manager.load("img/gameover.png", Texture.class);
 		manager.load("sound/die.ogg",Sound.class);
@@ -40,5 +42,6 @@ public class MainGame extends Game {
 		menuScreen = new MenuScreen(this);
 		setScreen(menuScreen);
 	}
+
 
 }

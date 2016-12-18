@@ -2,16 +2,9 @@ package com.gravity.golf.entities;
 
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.Body;
-import com.badlogic.gdx.physics.box2d.BodyDef;
-import com.badlogic.gdx.physics.box2d.Fixture;
-import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Actor;
-
-import com.gravity.golf.Constants;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,6 +13,7 @@ public class EntityFactory extends Actor {
     private int level;
     private AssetManager manager;
     public PlayerEntity player;
+    private LauncherEntity launcher;
     private List<PlanetaEntity> planetaList = new ArrayList<PlanetaEntity>();
     private List<SkyScene> skyList = new ArrayList<SkyScene>();
 
@@ -46,7 +40,18 @@ public class EntityFactory extends Actor {
         return player;
     }
 
-
+    public LauncherEntity createLauncher(){
+        //////////////////////////////////////////    LOAD   IMAGES    ////////////////////////////////////////////
+        Texture launcherbaseTexture = manager.get("img/plataforma.png");
+        ///////////////////////////////////////////////////////////////////////////////////////////////////////////
+        if(level == 1) {
+            launcher = new LauncherEntity(launcherbaseTexture, new Vector2(6,0));
+        }else if(level == 2){
+            launcher = new LauncherEntity(launcherbaseTexture, new Vector2(0,-6));
+        }
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////
+        return launcher;
+    }
 
 
     public List<PlanetaEntity> createPlanets(World world) {
@@ -76,8 +81,8 @@ public class EntityFactory extends Actor {
 
 
         /////////////////////////////////////////     LOAD    SKY     ///////////////////////////////////////////
-        skyList.add(new SkyScene(texture1,-3200,-2400,6400,4800));
-        skyList.add(new SkyScene(texture2,-800,-600,1600,1200));
+        skyList.add(new SkyScene(texture1,-2000,-2000,4000,4000));
+        skyList.add(new SkyScene(texture2,-1600,-1600,3200,3200));
 
         //////////////////////////////////////////////////////////////////////////////////////////////////////////
         return skyList;

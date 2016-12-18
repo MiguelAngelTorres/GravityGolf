@@ -10,7 +10,7 @@ package com.gravity.golf.entities;
         import com.badlogic.gdx.physics.box2d.World;
         import com.badlogic.gdx.scenes.scene2d.Actor;
 
-        import com.gravity.golf.Constants;
+        import com.gravity.golf.Util.Constants;
 
 public class PlanetaEntity extends Actor {
 
