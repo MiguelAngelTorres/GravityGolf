@@ -20,6 +20,7 @@ public class PlayerEntity extends Actor {
     public Body body;
     private Fixture fixture;
     private boolean alive = false, explotando = false;
+    private LauncherEntity launcher;
     private int contador_muerte;
 
     public void setAlive(boolean novo){
@@ -31,12 +32,13 @@ public class PlayerEntity extends Actor {
     public boolean isExplotando() { return explotando; }
     public void setExplosion(){ explotando = true; }
 
-    public PlayerEntity(World world, Texture texture, Vector2 pos, Vector2 v_init){
+    public PlayerEntity(World world, Texture texture, LauncherEntity launcher){
         this.world = world;
         this.texture = new Image(texture);
+        this.launcher = launcher;
 
         BodyDef def = new BodyDef();
-        def.position.set(pos);
+        def.position.set(launcher.pos.x,launcher.pos.y);
         def.type = BodyDef.BodyType.DynamicBody;
         body = world.createBody(def);
 
@@ -47,8 +49,6 @@ public class PlayerEntity extends Actor {
         jshape.dispose();
 
         setSize(0.5f * Constants.PIXEL_IN_METER, Constants.PIXEL_IN_METER);
-
-        body.setLinearVelocity(v_init);
     }
 
     @Override
@@ -76,10 +76,17 @@ public class PlayerEntity extends Actor {
                 texture.setRotation(-90 + 145);
             }
             texture.draw(batch, parentAlpha);
-        }else if ( explotando = false){
-
+        }else if ( explotando == false){
+            texture.setColor(batch.getColor());
+            texture.setSize(getWidth(), getHeight());
+            texture.setPosition(getX(), getY());
+            texture.setOriginX(getWidth() / 2);
+            texture.setOriginY(getHeight() / 2);
+            texture.setRotation((float) atan( (launcher.pos.x-getX()) / (launcher.pos.y-getY()) ));
+            texture.draw(batch, parentAlpha);
         }else{
             contador_muerte++;
+            //////   ANIMACION DE MUERTE   //////
         }
     }
 

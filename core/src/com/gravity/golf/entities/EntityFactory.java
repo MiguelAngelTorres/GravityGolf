@@ -27,29 +27,24 @@ public class EntityFactory extends Actor {
     public PlayerEntity createPlayer(World world) {
         //////////////////////////////////////////    LOAD   IMAGES    ////////////////////////////////////////////
         Texture playerTexture = manager.get("img/nave.png");
+        Texture launcherbaseTexture = manager.get("img/plataforma.png");
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
         /////////////////////////////////////////    LOAD    PLAYER    ///////////////////////////////////////////
         if(level == 1) {
-            player = new PlayerEntity(world, playerTexture, new Vector2(6,0), new Vector2(0,5));
+            launcher = new LauncherEntity(launcherbaseTexture, new Vector2(6,0));
+            player = new PlayerEntity(world, playerTexture, launcher);
         }else if(level == 2){
-            player = new PlayerEntity(world, playerTexture, new Vector2(0,-6), new Vector2(-6,4));
+            launcher = new LauncherEntity(launcherbaseTexture, new Vector2(0,-6));
+            player = new PlayerEntity(world, playerTexture, launcher);
         }
         //////////////////////////////////////////////////////////////////////////////////////////////////////////
         return player;
     }
 
     public LauncherEntity createLauncher(){
-        //////////////////////////////////////////    LOAD   IMAGES    ////////////////////////////////////////////
-        Texture launcherbaseTexture = manager.get("img/plataforma.png");
-        ///////////////////////////////////////////////////////////////////////////////////////////////////////////
-        if(level == 1) {
-            launcher = new LauncherEntity(launcherbaseTexture, new Vector2(6,0));
-        }else if(level == 2){
-            launcher = new LauncherEntity(launcherbaseTexture, new Vector2(0,-6));
-        }
-        //////////////////////////////////////////////////////////////////////////////////////////////////////////
+        ///////////////////////////////////////////////   PREVIA LLAMADA DEL JUGADOR   ////////////////////////////
         return launcher;
     }
 

@@ -19,7 +19,7 @@ import static java.lang.Math.atan;
 
 public class LauncherEntity extends Actor {
     private Texture launcher_base;
-    private Vector2 pos;
+    public Vector2 pos;
 
     public LauncherEntity(Texture texture, Vector2 posicion){
         this.launcher_base = texture;
@@ -30,7 +30,7 @@ public class LauncherEntity extends Actor {
     @Override
     public void draw(Batch batch, float parentAlpha) {
         setPosition((pos.x - 0.5f)* Constants.PIXEL_IN_METER, (pos.y - 0.5f) * Constants.PIXEL_IN_METER);
-        batch.draw(launcher_base, getX(), getY(), getWidth() * 2, getHeight() * 2);
+        batch.draw(launcher_base, getX(), getY(), getWidth() , getHeight() );
     }
 
     @Override

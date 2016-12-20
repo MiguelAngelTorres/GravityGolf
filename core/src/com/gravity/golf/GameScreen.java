@@ -105,20 +105,17 @@ public class GameScreen extends PantallaBase {
         for (SkyScene s : skyList){
             stage.addActor(s);
         }
-
+        player = factor.createPlayer(world);
         launcher = factor.createLauncher();
         stage.addActor(launcher);
-
-        player = factor.createPlayer(world);
-        stage.addActor(player);
-        player.setAlive(true);
+        stage.addActor(player);  /// LE CAMBIO EL ORDEN PARA QUE SE PINTEN BIEN
 
         planetaList = factor.createPlanets(world);
         for (PlanetaEntity p : planetaList){
             stage.addActor(p);
         }
 
-        ((OrthographicCamera)stage.getCamera()).zoom = 6;
+        ((OrthographicCamera)stage.getCamera()).zoom = 2.5f;
 
 //        gameMusic.setVolume(0.60f);
 //        gameMusic.play();
@@ -165,10 +162,15 @@ public class GameScreen extends PantallaBase {
                 System.out.println(aux.toString());
             }
             player.applyGravity(aux);
-        }else if (!player.isExplotando()){
-            stage.getCamera().position.set(position);
-            ((OrthographicCamera)stage.getCamera()).zoom = 1;
-            stage.getCamera().update();
+        }else if (!player.isExplotando()){   /////  EL JUGADOR ESTA EN BASE  /////
+            ((OrthographicCamera)stage.getCamera()).position.x = player.getX();
+            ((OrthographicCamera)stage.getCamera()).position.y = player.getY();
+            ((OrthographicCamera)stage.getCamera()).zoom = 2.5f;
+
+        }else{
+            /////////////  LA CAMARA SE MUEVE HACIA EL LAUNCHER   ////////////////
+            ((OrthographicCamera)stage.getCamera()).position.x += (float) ((launcher.pos.x - ((OrthographicCamera)stage.getCamera()).position.x) * 0.01f);
+            ((OrthographicCamera)stage.getCamera()).position.y += (float) ((launcher.pos.y - ((OrthographicCamera)stage.getCamera()).position.y) * 0.01f);
         }
 
         stage.act();
