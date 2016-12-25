@@ -100,7 +100,7 @@ public class GameScreen extends PantallaBase {
 
     @Override
     public void show() {
-        EntityFactory factor = new EntityFactory(game.getManager(),2);
+        EntityFactory factor = new EntityFactory(stage, game.getManager(),2);
         skyList = factor.createSky();
         for (SkyScene s : skyList){
             stage.addActor(s);
@@ -153,9 +153,10 @@ public class GameScreen extends PantallaBase {
 
             //////////////////////////////////////////////    MOTOR     DE     GRAVEDAD     //////////////////////////////////////
             Vector2 aux = new Vector2(0,0);
+            Vector2 aux2 = player.body.getPosition();
             for(PlanetaEntity planet : planetaList){
-                float dx = planet.body.getPosition().x - player.body.getPosition().x;
-                float dy = planet.body.getPosition().y - player.body.getPosition().y;
+                float dx = planet.body.getPosition().x - aux2.x;
+                float dy = planet.body.getPosition().y - aux2.y;
                 float dcubo = (float) (1/pow(dx*dx + dy*dy,1.5f));
                 aux.x += planet.getMass()*(dx) * dcubo;
                 aux.y += planet.getMass()*(dy) * dcubo;
@@ -163,10 +164,12 @@ public class GameScreen extends PantallaBase {
             }
             player.applyGravity(aux);
         }else if (!player.isExplotando()){   /////  EL JUGADOR ESTA EN BASE  /////
-            ((OrthographicCamera)stage.getCamera()).position.x = player.getX();
-            ((OrthographicCamera)stage.getCamera()).position.y = player.getY();
             ((OrthographicCamera)stage.getCamera()).zoom = 2.5f;
+          //  ((OrthographicCamera)stage.getCamera()).position.x = player.getX();
+          //  ((OrthographicCamera)stage.getCamera()).position.y = player.getY();
 
+            ((OrthographicCamera)stage.getCamera()).position.x += (float) ((player.getX() - ((OrthographicCamera)stage.getCamera()).position.x) * 0.05f);
+            ((OrthographicCamera)stage.getCamera()).position.y += (float) ((player.getY() - ((OrthographicCamera)stage.getCamera()).position.y) * 0.05f);
         }else{
             /////////////  LA CAMARA SE MUEVE HACIA EL LAUNCHER   ////////////////
             ((OrthographicCamera)stage.getCamera()).position.x += (float) ((launcher.pos.x - ((OrthographicCamera)stage.getCamera()).position.x) * 0.01f);

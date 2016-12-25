@@ -1,5 +1,7 @@
 package com.gravity.golf.entities;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Vector2;
@@ -9,9 +11,15 @@ import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop;
+import com.badlogic.gdx.scenes.scene2d.utils.DragListener;
 import com.gravity.golf.Util.Constants;
 
+import static com.gravity.golf.Util.Constants.GAME_HEIGHT;
+import static com.gravity.golf.Util.Constants.GAME_WIDTH;
 import static java.lang.Math.atan;
 
 public class PlayerEntity extends Actor {
@@ -19,8 +27,12 @@ public class PlayerEntity extends Actor {
     private World world;
     public Body body;
     private Fixture fixture;
-    private boolean alive = false, explotando = false;
     private LauncherEntity launcher;
+    private Stage stage;
+
+    private boolean alive = false, explotando = false, agarrado = false;
+
+    float touchX, touchY;
     private int contador_muerte;
 
     public void setAlive(boolean novo){
@@ -32,7 +44,8 @@ public class PlayerEntity extends Actor {
     public boolean isExplotando() { return explotando; }
     public void setExplosion(){ explotando = true; }
 
-    public PlayerEntity(World world, Texture texture, LauncherEntity launcher){
+    public PlayerEntity(Stage s, World world, Texture texture, LauncherEntity launcher){
+        this.stage = s;
         this.world = world;
         this.texture = new Image(texture);
         this.launcher = launcher;
@@ -49,6 +62,7 @@ public class PlayerEntity extends Actor {
         jshape.dispose();
 
         setSize(0.5f * Constants.PIXEL_IN_METER, Constants.PIXEL_IN_METER);
+
     }
 
     @Override
@@ -90,9 +104,17 @@ public class PlayerEntity extends Actor {
         }
     }
 
+
     @Override
     public void act(float delta) {
-
+        if(!alive){
+            cogido();
+            if(agarrado){
+                body.setTransform(launcher.posX() + (Gdx.input.getX() - touchX)/Constants.PIXEL_IN_METER, launcher.posY() + (touchY - Gdx.input.getY())/Constants.PIXEL_IN_METER, 0);
+            }else{}
+        }else{
+            /////////    ACTIVACION DE COMPONENTES   O    PAUSE     /////////////
+        }
     }
 
 
@@ -107,6 +129,44 @@ public class PlayerEntity extends Actor {
         body.setLinearVelocity(Vx,Vy);
     }
 
+    public float cero_relativoX(){
+        return stage.getCamera().position.x- GAME_WIDTH /2;   //////   MALAS REFERENCIAS
+    }
+    public float cero_relativoY(){
+        return stage.getCamera().position.y - GAME_HEIGHT/2;
+    }
+
+    private void cogido(){
+        System.out.println(body.getPosition().x + "  " + Gdx.input.getX());
+        if(Gdx.input.isTouched()){
+            float aux = cero_relativoX();
+            float auy = cero_relativoY();
+            float aux2 = Constants.PIXEL_IN_METER/5;
+
+
+            if(Gdx.input.getX() < getX() + aux2 - aux && Gdx.input.getX() > getX() - aux2 - aux && Gdx.input.getY() < getY() + aux2 - auy && Gdx.input.getY() > getY() - aux2 - auy){
+                agarrado = true;
+                touchX = Gdx.input.getX();
+                touchY = Gdx.input.getY();
+            }else if (!agarrado){
+                if(Gdx.input.justTouched()){    ///  SE CALCULA EL OFFSET CUANDO PINCHAS FUERA DE LA NAVE
+                    touchX = Gdx.input.getX();
+                    touchY = Gdx.input.getY();
+                }                               ///  SE MUEVE LA CAMARA A LA POSICION TOCADA MENOS EL OFFSET
+                stage.getCamera().translate((touchX - Gdx.input.getX())*0.2f, (Gdx.input.getY() - touchY)*0.2f,0);
+            }
+        }else{
+            if(agarrado){
+                alive = true;
+                jump((launcher.posX() - body.getPosition().x)*5, (launcher.posY() - body.getPosition().y)*5);
+                agarrado = false;
+            }else{
+                touchX = ((OrthographicCamera)stage.getCamera()).position.x;
+                touchY = ((OrthographicCamera)stage.getCamera()).position.y;
+            }
+
+        }
+    }
     public  float getVelocityX(){
         return body.getLinearVelocity().x;
     }

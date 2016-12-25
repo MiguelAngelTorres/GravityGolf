@@ -5,21 +5,24 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class EntityFactory extends Actor {
     private int level;
+    private Stage stage;
     private AssetManager manager;
     public PlayerEntity player;
     private LauncherEntity launcher;
     private List<PlanetaEntity> planetaList = new ArrayList<PlanetaEntity>();
     private List<SkyScene> skyList = new ArrayList<SkyScene>();
 
-    public EntityFactory(AssetManager manager, int level) {
+    public EntityFactory(Stage s, AssetManager manager, int level) {
         this.manager = manager;
         this.level = level;
+        this.stage = s;
     }
 
 
@@ -34,10 +37,11 @@ public class EntityFactory extends Actor {
         /////////////////////////////////////////    LOAD    PLAYER    ///////////////////////////////////////////
         if(level == 1) {
             launcher = new LauncherEntity(launcherbaseTexture, new Vector2(6,0));
-            player = new PlayerEntity(world, playerTexture, launcher);
+            player = new PlayerEntity(stage, world, playerTexture, launcher);
+            launcher.setPlayer(player);
         }else if(level == 2){
             launcher = new LauncherEntity(launcherbaseTexture, new Vector2(0,-6));
-            player = new PlayerEntity(world, playerTexture, launcher);
+            player = new PlayerEntity(stage, world, playerTexture, launcher);
         }
         //////////////////////////////////////////////////////////////////////////////////////////////////////////
         return player;
