@@ -72,7 +72,8 @@ public class EntityFactory extends Actor {
 
 
 
-    public List<SkyScene> createSky() {
+    public List<SkyScene> createSky() { ///// NECESARIO HABER CREADO AL JUGADOR   /////////////////////////////////
+
         //////////////////////////////////////////    LOAD   IMAGES    ////////////////////////////////////////////
         Texture texture1 = manager.get("img/Estrella_1.png");
         Texture texture2 = manager.get("img/Estrella_2.png");
@@ -80,8 +81,8 @@ public class EntityFactory extends Actor {
 
 
         /////////////////////////////////////////     LOAD    SKY     ///////////////////////////////////////////
-        skyList.add(new SkyScene(texture1,-2000,-2000,4000,4000));
-        skyList.add(new SkyScene(texture2,-1600,-1600,3200,3200));
+        skyList.add(new SkyScene(player, texture1,-2000,-2000,4000,4000));
+        skyList.add(new SkyScene(player, texture2,-1600,-1600,3200,3200));
 
         //////////////////////////////////////////////////////////////////////////////////////////////////////////
         return skyList;

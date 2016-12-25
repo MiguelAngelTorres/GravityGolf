@@ -101,14 +101,16 @@ public class GameScreen extends PantallaBase {
     @Override
     public void show() {
         EntityFactory factor = new EntityFactory(stage, game.getManager(),2);
+        player = factor.createPlayer(world);
+        launcher = factor.createLauncher();
         skyList = factor.createSky();
         for (SkyScene s : skyList){
             stage.addActor(s);
         }
-        player = factor.createPlayer(world);
-        launcher = factor.createLauncher();
         stage.addActor(launcher);
         stage.addActor(player);  /// LE CAMBIO EL ORDEN PARA QUE SE PINTEN BIEN
+
+
 
         planetaList = factor.createPlanets(world);
         for (PlanetaEntity p : planetaList){

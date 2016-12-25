@@ -20,6 +20,7 @@ import com.gravity.golf.Util.Constants;
 
 import static com.gravity.golf.Util.Constants.GAME_HEIGHT;
 import static com.gravity.golf.Util.Constants.GAME_WIDTH;
+import static java.lang.Math.abs;
 import static java.lang.Math.atan;
 
 public class PlayerEntity extends Actor {
@@ -110,8 +111,16 @@ public class PlayerEntity extends Actor {
         if(!alive){
             cogido();
             if(agarrado){
-                body.setTransform(launcher.posX() + (Gdx.input.getX() - touchX)/Constants.PIXEL_IN_METER, launcher.posY() + (touchY - Gdx.input.getY())/Constants.PIXEL_IN_METER, 0);
-            }else{}
+                float sq = abs(Vector2.dst(Gdx.input.getX() - touchX,touchY - Gdx.input.getY(),launcher.posX(),launcher.posY()));
+                System.out.println(sq);
+                if(sq > 128){                                                              /// LIMITACION DEL TIRACHINAS
+                    body.setTransform(launcher.posX() + (Gdx.input.getX() - touchX)*128 / (sq*Constants.PIXEL_IN_METER), launcher.posY() + (touchY - Gdx.input.getY())*128 / (sq*Constants.PIXEL_IN_METER), 0);
+                }else {
+                    body.setTransform(launcher.posX() + (Gdx.input.getX() - touchX) / Constants.PIXEL_IN_METER, launcher.posY() + (touchY - Gdx.input.getY()) / Constants.PIXEL_IN_METER, 0);
+                }
+            }else{
+
+            }
         }else{
             /////////    ACTIVACION DE COMPONENTES   O    PAUSE     /////////////
         }
@@ -130,13 +139,13 @@ public class PlayerEntity extends Actor {
     }
 
     public float cero_relativoX(){
-        return stage.getCamera().position.x- GAME_WIDTH /2;   //////   MALAS REFERENCIAS
+        return stage.getCamera().position.x- GAME_WIDTH /2;
     }
     public float cero_relativoY(){
         return stage.getCamera().position.y - GAME_HEIGHT/2;
     }
 
-    private void cogido(){
+    private void cogido(){    ////////////////////////////////////////////////   ALGO RARO PASA SI CAMBIAS DE RESOLUCION
         System.out.println(body.getPosition().x + "  " + Gdx.input.getX());
         if(Gdx.input.isTouched()){
             float aux = cero_relativoX();
