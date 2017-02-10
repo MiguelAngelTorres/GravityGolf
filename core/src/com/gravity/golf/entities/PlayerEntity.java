@@ -74,7 +74,7 @@ public class PlayerEntity extends Actor {
             ////////////////////////////////////////////   GIRANAVES EN FUNCION DE LA VELOCIDAD  ///////////////////////////////////
             texture.setColor(batch.getColor());
             texture.setSize(getWidth(), getHeight());
-            texture.setPosition(getX(), getY());
+            texture.setPosition(getX()-0.25f, getY()-0.5f);
             texture.setOriginX(getWidth() / 2);
             texture.setOriginY(getHeight() / 2);
 
@@ -112,7 +112,6 @@ public class PlayerEntity extends Actor {
             cogido();
             if(agarrado){
                 float sq = abs(Vector2.dst(Gdx.input.getX() - touchX,touchY - Gdx.input.getY(),launcher.posX(),launcher.posY()));
-                System.out.println(sq);
                 if(sq > 128){                                                              /// LIMITACION DEL TIRACHINAS
                     body.setTransform(launcher.posX() + (Gdx.input.getX() - touchX)*128 / (sq*Constants.PIXEL_IN_METER), launcher.posY() + (touchY - Gdx.input.getY())*128 / (sq*Constants.PIXEL_IN_METER), 0);
                 }else {
@@ -146,15 +145,12 @@ public class PlayerEntity extends Actor {
     }
 
     private void cogido(){    ////////////////////////////////////////////////   ALGO RARO PASA SI CAMBIAS DE RESOLUCION
-        System.out.println(body.getPosition().x + "  " + Gdx.input.getX());
+      //  System.out.println((Gdx.input.getY()*1.0/Gdx.graphics.getHeight()*1.0)+" "+(Gdx.input.getX()*1.0/Gdx.graphics.getWidth()*1.0));
         if(Gdx.input.isTouched()){
-            float aux = cero_relativoX();
-            float auy = cero_relativoY();
-            float aux2 = Constants.PIXEL_IN_METER/5;
-
-
-            if(Gdx.input.getX() < getX() + aux2 - aux && Gdx.input.getX() > getX() - aux2 - aux && Gdx.input.getY() < getY() + aux2 - auy && Gdx.input.getY() > getY() - aux2 - auy){
+            if(Gdx.input.getX()*1.0/Gdx.graphics.getWidth()*1.0<0.52f  &&  Gdx.input.getX()*1.0/Gdx.graphics.getWidth()*1.0>0.48f &&
+               Gdx.input.getY()*1.0/Gdx.graphics.getHeight()*1.0<0.51f  &&  Gdx.input.getY()*1.0/Gdx.graphics.getHeight()*1.0 >0.47f){  // DESFASE POR EL OUTPUT, EL 50% ESTA EN LA BASE DE LA NAVE
                 agarrado = true;
+                System.out.println("yefah");
                 touchX = Gdx.input.getX();
                 touchY = Gdx.input.getY();
             }else if (!agarrado){

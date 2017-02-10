@@ -21,7 +21,7 @@ public class SkyScene extends Actor{
 
     @Override
     public void draw(Batch batch, float parentAlpha) {
-        batch.draw(texture,x + player.getX()*256/width ,y + player.getY()*256/height,width,height);
+        batch.draw(texture,x + player.getX()*1024/width ,y + player.getY()*1024/height,width,height);
     }
 
     @Override

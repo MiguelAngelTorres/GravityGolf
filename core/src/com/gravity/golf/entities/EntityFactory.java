@@ -81,8 +81,8 @@ public class EntityFactory extends Actor {
 
 
         /////////////////////////////////////////     LOAD    SKY     ///////////////////////////////////////////
-        skyList.add(new SkyScene(player, texture1,-2000,-2000,4000,4000));
-        skyList.add(new SkyScene(player, texture2,-1600,-1600,3200,3200));
+        skyList.add(new SkyScene(player, texture1,-4000,-4000,8000,8000));
+        skyList.add(new SkyScene(player, texture2,-2000,-2000,4000,4000));
 
         //////////////////////////////////////////////////////////////////////////////////////////////////////////
         return skyList;
@@ -90,6 +90,3 @@ public class EntityFactory extends Actor {
 
 
 }
-
-
-

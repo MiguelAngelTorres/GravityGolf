@@ -117,7 +117,7 @@ public class GameScreen extends PantallaBase {
             stage.addActor(p);
         }
 
-        ((OrthographicCamera)stage.getCamera()).zoom = 2.5f;
+        ((OrthographicCamera)stage.getCamera()).zoom = 2.8f;
 
 //        gameMusic.setVolume(0.60f);
 //        gameMusic.play();
@@ -160,9 +160,8 @@ public class GameScreen extends PantallaBase {
                 float dx = planet.body.getPosition().x - aux2.x;
                 float dy = planet.body.getPosition().y - aux2.y;
                 float dcubo = (float) (1/pow(dx*dx + dy*dy,1.5f));
-                aux.x += planet.getMass()*(dx) * dcubo;
-                aux.y += planet.getMass()*(dy) * dcubo;
-                System.out.println(aux.toString());
+                aux.x += 2*planet.getMass()*(dx) * dcubo;
+                aux.y += 2*planet.getMass()*(dy) * dcubo;
             }
             player.applyGravity(aux);
         }else if (!player.isExplotando()){   /////  EL JUGADOR ESTA EN BASE  /////
@@ -173,7 +172,7 @@ public class GameScreen extends PantallaBase {
             ((OrthographicCamera)stage.getCamera()).position.x += (float) ((player.getX() - ((OrthographicCamera)stage.getCamera()).position.x) * 0.05f);
             ((OrthographicCamera)stage.getCamera()).position.y += (float) ((player.getY() - ((OrthographicCamera)stage.getCamera()).position.y) * 0.05f);
         }else{
-            /////////////  LA CAMARA SE MUEVE HACIA EL LAUNCHER   ////////////////
+            /////////////  LA CAMARA SE MUEVE HACIA EL LAUNCHER MIENTRAS JUGADOR EXPLOTA  ////////////////
             ((OrthographicCamera)stage.getCamera()).position.x += (float) ((launcher.pos.x - ((OrthographicCamera)stage.getCamera()).position.x) * 0.01f);
             ((OrthographicCamera)stage.getCamera()).position.y += (float) ((launcher.pos.y - ((OrthographicCamera)stage.getCamera()).position.y) * 0.01f);
         }
