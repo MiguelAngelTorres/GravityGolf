@@ -47,10 +47,17 @@ public class EntityFactory extends Actor {
         return player;
     }
 
+
+
+
+
     public LauncherEntity createLauncher(){
         ///////////////////////////////////////////////   PREVIA LLAMADA DEL JUGADOR   ////////////////////////////
         return launcher;
     }
+
+
+
 
 
     public List<PlanetaEntity> createPlanets(World world) {
@@ -63,12 +70,14 @@ public class EntityFactory extends Actor {
         if(level == 1) {
             planetaList.add(new PlanetaEntity(world, planetaTexture, new Vector2(0,0), 2));
         }else if(level == 2){
-            planetaList.add(new PlanetaEntity(world, planetaTexture, new Vector2(0,0), 2));
-            planetaList.add(new PlanetaEntity(world, planetaTexture, new Vector2(0,15), 2));
+            planetaList.add(new PlanetaEntity(world, planetaTexture, new Vector2(0,-15), 3));
+            planetaList.add(new PlanetaEntity(world, planetaTexture, new Vector2(0,15), 3));
         }
         //////////////////////////////////////////////////////////////////////////////////////////////////////////
         return planetaList;
     }
+
+
 
 
 
@@ -89,4 +98,13 @@ public class EntityFactory extends Actor {
     }
 
 
+
+
+    public Explosion createExplosion(){
+        //////////////////////////////////////////    LOAD   IMAGES    ////////////////////////////////////////////
+        Texture texture1 = manager.get("img/Boom.png");
+
+        ///////////////////////////////////////////////////////////////////////////////////////////////////////////
+        return new Explosion(texture1,new Vector2(player.getX(),player.getY()));
+    }
 }

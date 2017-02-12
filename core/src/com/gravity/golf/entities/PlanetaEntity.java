@@ -41,8 +41,8 @@ public class PlanetaEntity extends Actor {
 
     @Override
     public void draw(Batch batch, float parentAlpha) {
-        setPosition((body.getPosition().x - radius)* Constants.PIXEL_IN_METER, (body.getPosition().y - radius) * Constants.PIXEL_IN_METER);
-        batch.draw(planeta, getX(), getY(), getWidth() * 2, getHeight() * 2);
+        setPosition((body.getPosition().x - radius*1.5f)* Constants.PIXEL_IN_METER, (body.getPosition().y - radius*1.2f) * Constants.PIXEL_IN_METER);
+        batch.draw(planeta, getX(), getY(), getWidth() *2.8f, getHeight() *2.8f);
     }
 
     public void detach() {

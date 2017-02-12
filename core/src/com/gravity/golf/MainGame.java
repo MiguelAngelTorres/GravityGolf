@@ -29,8 +29,9 @@ public class MainGame extends Game {
 		manager.load("img/nave.png", Texture.class);
 		manager.load("img/plataforma.png", Texture.class);
 		manager.load("img/logo.png", Texture.class);
+		manager.load("img/Boom.png", Texture.class);
 		manager.load("img/gameover.png", Texture.class);
-		manager.load("sound/die.ogg",Sound.class);
+		manager.load("sound/die.wav",Sound.class);
 
 		loadingScreen = new LoadingScreen(this);
 		setScreen(loadingScreen);

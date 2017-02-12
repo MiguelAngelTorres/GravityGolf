@@ -8,7 +8,7 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 public class SkyScene extends Actor{
     private PlayerEntity player;
     private Texture texture;
-    private float x, y, width, height;
+    private float x, y, width, height, offx, offy;
 
     public SkyScene(PlayerEntity player, Texture texture, float x, float y, float width, float height){
         this.player = player;
@@ -17,13 +17,18 @@ public class SkyScene extends Actor{
         this.height = height;
         this.x = x;
         this.y = y;
+        this.offx = 0;
+        this.offy = 0;
     }
 
     @Override
     public void draw(Batch batch, float parentAlpha) {
-        batch.draw(texture,x + player.getX()*1024/width ,y + player.getY()*1024/height,width,height);
+        if (player.isAlive()) {
+            offx = player.getX() * 1024 / width;
+            offy = player.getY() * 1024 / height;
+        }
+        batch.draw(texture, x + offx, y + offy, width, height);
     }
-
     @Override
     public void act(float delta) {
 

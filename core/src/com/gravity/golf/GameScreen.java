@@ -43,11 +43,12 @@ public class GameScreen extends PantallaBase {
     private List<PlanetaEntity> planetaList;
     private List<SkyScene> skyList;
     private LauncherEntity launcher;
+    private EntityFactory factor;
 
 
     public GameScreen(final MainGame game) {
         super(game);
-        dieSound = game.getManager().get("sound/die.ogg");
+        dieSound = game.getManager().get("sound/die.wav");
 
         stage = new Stage(new FitViewport(GAME_WIDTH, GAME_HEIGHT));
         world = new World(new Vector2(0, 0), true);
@@ -65,8 +66,9 @@ public class GameScreen extends PantallaBase {
                 if (areCollided(contact, "player", "planet")) {
                     if (player.isAlive()) {
                         dieSound.play();
-                        player.setAlive(false);
                         player.setExplosion();
+                        stage.addActor(factor.createExplosion());
+                        player.setAlive(false);
                         stage.addAction(Actions.sequence(
                                 Actions.delay(1f),
                                 Actions.run(new Runnable() {
@@ -100,7 +102,7 @@ public class GameScreen extends PantallaBase {
 
     @Override
     public void show() {
-        EntityFactory factor = new EntityFactory(stage, game.getManager(),2);
+        factor = new EntityFactory(stage, game.getManager(),2);
         player = factor.createPlayer(world);
         launcher = factor.createLauncher();
         skyList = factor.createSky();
@@ -160,21 +162,16 @@ public class GameScreen extends PantallaBase {
                 float dx = planet.body.getPosition().x - aux2.x;
                 float dy = planet.body.getPosition().y - aux2.y;
                 float dcubo = (float) (1/pow(dx*dx + dy*dy,1.5f));
-                aux.x += 2*planet.getMass()*(dx) * dcubo;
-                aux.y += 2*planet.getMass()*(dy) * dcubo;
+                aux.x += planet.getMass()*(dx) * dcubo;
+                aux.y += planet.getMass()*(dy) * dcubo;
             }
             player.applyGravity(aux);
-        }else if (!player.isExplotando()){   /////  EL JUGADOR ESTA EN BASE  /////
-            ((OrthographicCamera)stage.getCamera()).zoom = 2.5f;
-          //  ((OrthographicCamera)stage.getCamera()).position.x = player.getX();
-          //  ((OrthographicCamera)stage.getCamera()).position.y = player.getY();
+        }else {
+            if (!player.isExplotando()) {    /////  EL JUGADOR ESTA EN BASE  /////
+                ((OrthographicCamera) stage.getCamera()).position.x += (float) ((player.getX() - ((OrthographicCamera) stage.getCamera()).position.x) * 0.05f);
+                ((OrthographicCamera) stage.getCamera()).position.y += (float) ((player.getY() - ((OrthographicCamera) stage.getCamera()).position.y) * 0.05f);
 
-            ((OrthographicCamera)stage.getCamera()).position.x += (float) ((player.getX() - ((OrthographicCamera)stage.getCamera()).position.x) * 0.05f);
-            ((OrthographicCamera)stage.getCamera()).position.y += (float) ((player.getY() - ((OrthographicCamera)stage.getCamera()).position.y) * 0.05f);
-        }else{
-            /////////////  LA CAMARA SE MUEVE HACIA EL LAUNCHER MIENTRAS JUGADOR EXPLOTA  ////////////////
-            ((OrthographicCamera)stage.getCamera()).position.x += (float) ((launcher.pos.x - ((OrthographicCamera)stage.getCamera()).position.x) * 0.01f);
-            ((OrthographicCamera)stage.getCamera()).position.y += (float) ((launcher.pos.y - ((OrthographicCamera)stage.getCamera()).position.y) * 0.01f);
+            }
         }
 
         stage.act();

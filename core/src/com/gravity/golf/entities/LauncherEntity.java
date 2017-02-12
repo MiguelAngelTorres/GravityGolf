@@ -19,14 +19,14 @@ public class LauncherEntity extends Actor {
     public LauncherEntity(Texture texture, Vector2 posicion){
         this.launcher_base = texture;
         pos = posicion;
-        setSize(Constants.PIXEL_IN_METER, Constants.PIXEL_IN_METER);
+        setSize(Constants.PIXEL_IN_METER*2, Constants.PIXEL_IN_METER*2);
     }
     public void setPlayer(PlayerEntity p){
         player = p;
     }
     @Override
     public void draw(Batch batch, float parentAlpha) {
-        setPosition((pos.x - 0.5f)* Constants.PIXEL_IN_METER, (pos.y - 0.5f) * Constants.PIXEL_IN_METER);
+        setPosition((pos.x - 1)* Constants.PIXEL_IN_METER, (pos.y - 1) * Constants.PIXEL_IN_METER);
         batch.draw(launcher_base, getX(), getY(), getWidth() , getHeight() );
     }
 
