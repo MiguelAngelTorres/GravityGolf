@@ -70,7 +70,7 @@ public class EntityFactory extends Actor {
         if(level == 1) {
             planetaList.add(new PlanetaEntity(world, planetaTexture, new Vector2(0,0), 2));
         }else if(level == 2){
-            planetaList.add(new PlanetaEntity(world, planetaTexture, new Vector2(0,-15), 3));
+            planetaList.add(new PlanetaEntity(world, planetaTexture, new Vector2(0,-20), 3));
             planetaList.add(new PlanetaEntity(world, planetaTexture, new Vector2(0,15), 3));
         }
         //////////////////////////////////////////////////////////////////////////////////////////////////////////

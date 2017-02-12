@@ -25,8 +25,8 @@ public abstract class Button extends Actor{
     protected boolean pulsado = false;
 
     public Button(int x, int y, int width, int height) {
-        boton_sin_pulsar = new Texture("sin_pulsar/plantilla.png");
-        boton_pulsado = new Texture("pulsado/plantilla.png");
+        boton_sin_pulsar = new Texture("img/plantilla_sin_pulsar.png");
+        boton_pulsado = new Texture("img/plantilla_pulsar.png");
         cadena = "";
         bordes = new Rectangle(x, y, width, height);
 

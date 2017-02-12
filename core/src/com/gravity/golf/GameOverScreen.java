@@ -11,9 +11,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 
-/**
- * Created by usuario on 10/11/16.
- */
 
 class GameOverScreen extends PantallaBase {
 
